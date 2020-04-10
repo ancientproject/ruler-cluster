@@ -9,15 +9,16 @@ app.post('/@me/hook', (req, res) => {
     res.sendStatus(200);
 });
 app.get('/@me/container/github', async (req, res) => {
+    const authKey = req.header("Authorization");
+    if(!authKey)
+        return res.sendStatus(401);
+    const credentials = await getDB().collection("cluster").doc("credentials").get();
+    if(credentials.get("api") !== authKey)
+        return res.sendStatus(401);
+
     // @ts-ignore
     const token = await getInstallationToken(+process.env["INST_ID"]);
-    res.send(token);
-})
-app.get('/ping', async (_, res) => {
-    res.send("ПОНГ БЛЯТЬ");
-});
-app.get('/select/anus/svack', async (_, res) => {
-    res.send("ПРУФ ЧТО СВАЦК ПИДОРАС");
+    return res.send(token);
 });
 
 const main = express();
