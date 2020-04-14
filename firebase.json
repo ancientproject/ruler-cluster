@@ -6,6 +6,7 @@
     ]
   },
   "hosting": {
+    "trailingSlash": true,
     "public": "public",
     "ignore": [
       "firebase.json",
