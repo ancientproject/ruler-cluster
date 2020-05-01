@@ -61,7 +61,8 @@ app.get('/@me/version/latest', async (req, res) =>
         version:{
             full: version,
             sem: semver.parse(version)
-        }
+        },
+        update_command: "yarn global add @rune-temp/cli"
     });
 });
 
