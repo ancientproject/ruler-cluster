@@ -1,8 +1,10 @@
 import { initializeApp, firestore } from "firebase-admin";
 import { config } from "firebase-functions";
 import { getInstallationToken } from "./github";
+import axios from "axios";
 import on from "./on";
 import express from "express";
+import semver from "semver";
 initializeApp(config().firebase);
 process.env["DEBUG"] = "express:*";
 const app = express();
@@ -42,6 +44,25 @@ app.get('/@me/container/github', async (req, res) => {
     const token = await getInstallationToken(+process.env["INST_ID"]);
     res.send(token);
     return;
+});
+
+
+app.get('/@me/version/latest', async (req, res) =>
+{
+    const result = await axios.get("https://api.github.com/repos/ancientproject/cli/releases/latest", { 
+        headers: { 
+            "User-Agent": "Ruler/1.0" 
+        } 
+    });
+
+    const version = result.data.tag_name;
+
+    res.send({
+        version:{
+            full: version,
+            sem: semver.parse(version)
+        }
+    });
 });
 
 const main = express();
