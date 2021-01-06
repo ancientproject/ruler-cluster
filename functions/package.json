@@ -20,7 +20,7 @@
     "@octokit/rest": "^17.1.4",
     "@octokit/types": "^2.5.1",
     "@sentry/node": "^5.15.4",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "express": "^4.17.1",
     "express-slash": "^2.0.1",
     "firebase-admin": "^8.10.0",
